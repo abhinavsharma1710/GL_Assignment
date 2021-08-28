@@ -26,21 +26,21 @@
                 </div>
                 <div class="col-lg-4 col-sm-8 registraionForm" id="registraionForm">
                     <div class="customTitle">Get Started Now</div>
-                    <form class="form">
+                    <form class="form" name= "registraionForm" >
                         <div class="mb-3">
-                            <input type="text" class="form-control" aria-describedby="nameHelp" placeholder="Name">
+                            <input type="text" class="form-control" aria-describedby="nameHelp" name="name" placeholder="Name">
                           </div>
                         <div class="mb-3">
-                          <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                          <input type="email" class="form-control" aria-describedby="emailHelp" name="email" placeholder="Enter email">
                         </div>
                         <div class="mb-3">
-                            <input type="tel" class="form-control" aria-describedby="mobileHelp" placeholder="Mobile No.">
+                            <input type="tel" class="form-control" aria-describedby="mobileHelp" name="mobile" placeholder="Mobile No.">
                           </div>
                         <div class="mb-3">
-                          <input type="password" class="form-control" placeholder="Password">
+                          <input type="password" class="form-control" name="password" placeholder="Password">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" aria-describedby="workExpHelp" placeholder="Work Experience">
+                            <input type="text" class="form-control" aria-describedby="workExpHelp" name="workexp" placeholder="Work Experience">
                           </div>
                           <div class="mb-3">
                             <select class="form-control">
@@ -52,11 +52,11 @@
                             </select>
                           </div>
                         <div class="form-check">
-                          <input type="checkbox" class="form-check-input" aria-describedby="authorizeHelp">
+                          <input type="checkbox" class="form-check-input" name="checkbox" aria-describedby="authorizeHelp">
                           <label class="form-check-label" for="exampleCheck1">I authorize Great Learning representative to contact me abount my interest in this program</label>
                         </div>
                         <div class="applyBtn mb-3">
-                            <button class="btn btn-primary" type="submit">Apply Now</button>
+                            <button class="btn btn-primary" type="button" onclick="validate()">Apply Now</button>
                         </div>
                       </form>
                 </div>
@@ -222,5 +222,70 @@
 
 <!-- jQuery library -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+    window.onload = function(){
+        let retrievedUser = JSON.parse(localStorage.getItem('user'));
+       
+        document.registraionForm.name.value = retrievedUser.name ? retrievedUser.name : null;
+        document.registraionForm.email.value =  retrievedUser.email ? retrievedUser.email: null;
+        document.registraionForm.mobile.value =  retrievedUser.mobile ? retrievedUser.mobile : null;
+        document.registraionForm.checkbox.checked =  retrievedUser.checked ? true :false;
+    }
+    function validate(){
+        let name = document.registraionForm.name.value;
+        let email = document.registraionForm.email.value;
+        let mobile = document.registraionForm.mobile.value;
+        let password = document.registraionForm.password.value;
+        let isChecked = document.registraionForm.checkbox.checked;
+        let hasError = false;
+        const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        console.log('hi',name, document.registraionForm.checkbox.checked)
+        if(name==null || name==""){
+            hasError = true;
+            document.registraionForm.name.className = document.registraionForm.name.className + " error";
+        }
+        if(isNaN(mobile) || mobile.length != 10){
+            hasError = true;
+            document.registraionForm.mobile.className = document.registraionForm.mobile.className + " error";
+        }
+        if(password.length < 6){
+            hasError = true;
+            document.registraionForm.password.className = document.registraionForm.password.className + " error";
+        }
+        if(!re.test(String(email).toLowerCase())){
+            hasError = true;
+            document.registraionForm.email.className = document.registraionForm.email.className + " error";
+        }
+        if(!isChecked){
+            hasError = true;
+            document.registraionForm.checkbox.className = document.registraionForm.checkbox.className + " error";
+        }
+        if(!hasError){
+            let userInfo = {
+                name:name,
+                email: email,
+                mobile: mobile
+            }
+            let retrievedUser = JSON.parse(localStorage.getItem('user'));
+            if(retrievedUser.email == email){
+                alert('User already registered !!!')
+            }else{
+                localStorage.setItem('user', JSON.stringify(userInfo))
+                resetForm();
+                alert('Thanks for Registration !!!')
+            }
+            
+        }
+        
+    }
+
+    function resetForm(){
+        document.registraionForm.name.value = null;
+        document.registraionForm.email.value = null;
+        document.registraionForm.mobile.value = null;
+        document.registraionForm.password.value = null;
+        document.registraionForm.checkbox.checked = false;
+    }
+</script>
 </body>
 </html>
