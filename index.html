@@ -68,10 +68,8 @@
     <div class="row justify-content-md-center width-80 recommendation">
             <label class="customTitle col-sm-7" >WHY LEARN FROM GREAT LEARNING</label>
             <div class="width-80 mb-3">
-                <video controls poster="/images/w3html5.gif" width="500" height="400">
-                    <source src="movie.mp4" type="video/mp4">
-                    <source src="movie.ogg" type="video/ogg">
-                    Your browser does not support the video tag.
+                <video controls poster="assets/images/poster.PNG" width="500" height="400">
+                    <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4">
                 </video>
             </div>
             <div class="row features">
@@ -239,7 +237,6 @@
         let isChecked = document.registraionForm.checkbox.checked;
         let hasError = false;
         const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        console.log('hi',name, document.registraionForm.checkbox.checked)
         if(name==null || name==""){
             hasError = true;
             document.registraionForm.name.className = document.registraionForm.name.className + " error";
