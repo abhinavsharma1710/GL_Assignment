@@ -150,6 +150,15 @@ ul.learningList li {
     text-align: center;
     color: #fff;
 }
+ .sticky {
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  height: 100%;
+  bottom: 5px;
+}
 
 @media only screen and (max-device-width: 767px) {
     .recommendation .features{
