@@ -28,16 +28,16 @@
                     <div class="customTitle">Get Started Now</div>
                     <form class="form" name= "registraionForm" >
                         <div class="mb-3">
-                            <input type="text" class="form-control" aria-describedby="nameHelp" name="name" placeholder="Name">
+                            <input type="text" class="form-control" aria-describedby="nameHelp" name="name" placeholder="Name" required>
                           </div>
                         <div class="mb-3">
-                          <input type="email" class="form-control" aria-describedby="emailHelp" name="email" placeholder="Enter email">
+                          <input type="email" class="form-control" aria-describedby="emailHelp" name="email" placeholder="Enter email" required>
                         </div>
                         <div class="mb-3">
-                            <input type="tel" class="form-control" aria-describedby="mobileHelp" name="mobile" placeholder="Mobile No.">
+                            <input type="tel" class="form-control" aria-describedby="mobileHelp" name="mobile" placeholder="Mobile No." required>
                           </div>
                         <div class="mb-3">
-                          <input type="password" class="form-control" name="password" placeholder="Password">
+                          <input type="password" class="form-control" name="password" placeholder="Password" required>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" aria-describedby="workExpHelp" name="workexp" placeholder="Work Experience">
@@ -68,9 +68,8 @@
     <div class="row justify-content-md-center width-80 recommendation">
             <label class="customTitle col-sm-7" >WHY LEARN FROM GREAT LEARNING</label>
             <div class="width-80 mb-3">
-                <video controls poster="assets/images/poster.PNG" width="500" height="400">
-                    <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4">
-                </video>
+                <iframe width="420" height="345" src="https://www.youtube.com/embed/KgxAnvhk2_U">
+                </iframe>
             </div>
             <div class="row features">
                 <div class="feature-desc col-md-2 yellowBg ">
@@ -210,7 +209,8 @@
 
      <!-- Footer  -->
      <div class="row justify-content-md-center footer">
-        <label>Explore this game changing opportunity  <a href="#registraionForm" type="button" class="btn btn-primary">Apply Now</a></label> 
+        <label>Explore this game changing opportunity
+        <a href="#registraionForm" type="button" class="btn btn-primary">Apply Now</a></label>
        
     </div>
     </div>
@@ -223,11 +223,12 @@
 <script>
     window.onload = function(){
         let retrievedUser = JSON.parse(localStorage.getItem('user'));
-       
-        document.registraionForm.name.value = retrievedUser.name ? retrievedUser.name : null;
-        document.registraionForm.email.value =  retrievedUser.email ? retrievedUser.email: null;
-        document.registraionForm.mobile.value =  retrievedUser.mobile ? retrievedUser.mobile : null;
-        document.registraionForm.checkbox.checked =  retrievedUser.checked ? true :false;
+        if(retrievedUser){
+            document.registraionForm.name.value = retrievedUser.name ? retrievedUser.name : null;
+            document.registraionForm.email.value =  retrievedUser.email ? retrievedUser.email: null;
+            document.registraionForm.mobile.value =  retrievedUser.mobile ? retrievedUser.mobile : null;
+            document.registraionForm.checkbox.checked =  retrievedUser.checked ? true :false;
+        }
     }
     function validate(){
         let name = document.registraionForm.name.value;
@@ -240,22 +241,33 @@
         if(name==null || name==""){
             hasError = true;
             document.registraionForm.name.className = document.registraionForm.name.className + " error";
+        }else{
+            document.registraionForm.name.className = document.registraionForm.name.className.replace('error', '');
         }
         if(isNaN(mobile) || mobile.length != 10){
             hasError = true;
             document.registraionForm.mobile.className = document.registraionForm.mobile.className + " error";
+        }else{
+            document.registraionForm.mobile.className = document.registraionForm.mobile.className.replace('error', '');
         }
         if(password.length < 6){
             hasError = true;
             document.registraionForm.password.className = document.registraionForm.password.className + " error";
+        }else{
+            document.registraionForm.password.className = document.registraionForm.password.className.replace('error', '');
         }
         if(!re.test(String(email).toLowerCase())){
             hasError = true;
             document.registraionForm.email.className = document.registraionForm.email.className + " error";
         }
+        else{
+            document.registraionForm.email.className = document.registraionForm.email.className.replace('error', '');
+        }
         if(!isChecked){
             hasError = true;
             document.registraionForm.checkbox.className = document.registraionForm.checkbox.className + " error";
+        }else{
+            document.registraionForm.checkbox.className = document.registraionForm.checkbox.className.replace('error', '');
         }
         if(!hasError){
             let userInfo = {
